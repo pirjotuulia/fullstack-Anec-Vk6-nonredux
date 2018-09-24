@@ -2,12 +2,13 @@ import React from 'react'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import Anecdote from './components/Anecdote'
 import Notification from './components/Notification';
+import './index.css'
 
 const Menu = () => (
-  <div>
-    <a href='#'>anecdotes</a>&nbsp;
-    <a href='#'>create new</a>&nbsp;
-    <a href='#'>about</a>&nbsp;
+  <div className="menu">
+    <Link to="/">anecdotes</Link> &nbsp;
+    <Link to="/create">create new</Link> &nbsp;
+    <Link to="/about">about</Link> &nbsp;
   </div>
 )
 
@@ -148,10 +149,7 @@ class App extends React.Component {
           <div>
             <h1>Software Anecdotes</h1>
             <div>
-              <Link to="/">anecdotes</Link> &nbsp;
-              <Link to="/create">create new</Link> &nbsp;
-              <Link to="/about">about</Link> &nbsp;
-              {/* <Link to="/users">users</Link> */}
+              <Menu />
             </div>
             {naytetaanIlmoitus}
             <Route exact path="/" render={() => <AnecdoteList anecdotes={this.state.anecdotes} />} />
