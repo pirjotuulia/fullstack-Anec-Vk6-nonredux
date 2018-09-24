@@ -5,26 +5,17 @@ import Notification from './components/Notification';
 import { NavLink } from 'react-router-dom'
 import './index.css'
 
+const menuActiveStyle = {
+  fontWeight: 'bold',
+  color: 'blue',
+  background: 'lavender',
+  padding: '10px'
+}
 const Menu = () => (
   <div className="menu">
-    <NavLink className="menuitem" exact to="/" activeStyle={{
-      fontWeight: 'bold',
-      color: 'blue',
-      background: 'lavender',
-      padding: '10px'
-    }}>Anecdotes</NavLink> &nbsp;
-    <NavLink className="menuitem" exact to="/create" activeStyle={{
-      fontWeight: 'bold',
-      color: 'blue',
-      background: 'lavender',
-      padding: '10px'
-    }}>Create new</NavLink> &nbsp;
-    <NavLink className="menuitem" exact to="/about" activeStyle={{
-      fontWeight: 'bold',
-      color: 'blue',
-      background: 'lavender',
-      padding: '10px'
-    }}>About</NavLink> &nbsp;
+    <NavLink className="menuitem" exact to="/" activeStyle={menuActiveStyle}>Anecdotes</NavLink> &nbsp;
+    <NavLink className="menuitem" exact to="/create" activeStyle={menuActiveStyle}>Create new</NavLink> &nbsp;
+    <NavLink className="menuitem" exact to="/about" activeStyle={menuActiveStyle}>About</NavLink> &nbsp;
   </div>
 )
 
