@@ -4,6 +4,7 @@ import Anecdote from './components/Anecdote'
 import Notification from './components/Notification';
 import { NavLink } from 'react-router-dom'
 import './index.css'
+import { Container, Table, Grid, Image, Menu } from 'semantic-ui-react';
 
 const menuActiveStyle = {
   fontWeight: 'bold',
@@ -11,17 +12,37 @@ const menuActiveStyle = {
   background: 'lavender',
   padding: '10px'
 }
-const Menu = () => (
-  <div className="menu">
-    <NavLink className="menuitem" exact to="/" activeStyle={menuActiveStyle}>Anecdotes</NavLink> &nbsp;
-    <NavLink className="menuitem" exact to="/create" activeStyle={menuActiveStyle}>Create new</NavLink> &nbsp;
-    <NavLink className="menuitem" exact to="/about" activeStyle={menuActiveStyle}>About</NavLink> &nbsp;
-  </div>
+const Navigation = () => (
+  <Menu>
+    <Menu.Item link>
+      <NavLink className="menuitem" exact to="/" activeStyle={menuActiveStyle}>Anecdotes</NavLink>
+    </Menu.Item>
+    <Menu.Item link>
+      <NavLink className="menuitem" exact to="/create" activeStyle={menuActiveStyle}>Create new</NavLink>
+    </Menu.Item>
+    <Menu.Item link>
+      <NavLink className="menuitem" exact to="/about" activeStyle={menuActiveStyle}>About</NavLink>
+    </Menu.Item>
+  </Menu>
 )
 
 const AnecdoteList = ({ anecdotes }) => (
   <div>
     <h2>Anecdotes</h2>
+    <Table celled>
+      <Table.Body>
+        {anecdotes.map(anecdote =>
+          <Table.Row key={anecdote.id}>
+            <Table.Cell>
+              <Link to={`/anecdotes/${anecdote.id}`}>{anecdote.content}</Link>
+            </Table.Cell>
+            <Table.Cell>
+              {anecdote.author}
+            </Table.Cell>
+          </Table.Row>
+        )}
+      </Table.Body>
+    </Table>
     <ul>
       {anecdotes.map(anecdote => <li key={anecdote.id} ><Link to={`/anecdotes/${anecdote.id}`}>{anecdote.content}</Link></li>)}
     </ul>
@@ -31,14 +52,20 @@ const AnecdoteList = ({ anecdotes }) => (
 const About = () => (
   <div>
     <h2>About anecdote app</h2>
-    <p>According to Wikipedia:</p>
 
-    <em>An anecdote is a brief, revealing account of an individual person or an incident.
-      Occasionally humorous, anecdotes differ from jokes because their primary purpose is not simply to provoke laughter but to reveal a truth more general than the brief tale itself,
-      such as to characterize a person by delineating a specific quirk or trait, to communicate an abstract idea about a person, place, or thing through the concrete details of a short narrative.
+    <Grid>
+      <Grid.Column width={12}>
+        <p>According to Wikipedia:</p>
+        <em>An anecdote is a brief, revealing account of an individual person or an incident.
+        Occasionally humorous, anecdotes differ from jokes because their primary purpose is not simply to provoke laughter but to reveal a truth more general than the brief tale itself,
+        such as to characterize a person by delineating a specific quirk or trait, to communicate an abstract idea about a person, place, or thing through the concrete details of a short narrative.
       An anecdote is "a story with a point."</em>
-
-    <p>Software engineering is full of excellent anecdotes, at this app you can find the best and add more.</p>
+        <p>Software engineering is full of excellent anecdotes, at this app you can find the best and add more.</p>
+      </Grid.Column>
+      <Grid.Column width={4}>
+        <Image src='https://upload.wikimedia.org/wikipedia/commons/0/01/LinuxCon_Europe_Linus_Torvalds_03_%28cropped%29.jpg' />
+      </Grid.Column>
+    </Grid>
   </div>
 )
 
@@ -154,26 +181,30 @@ class App extends React.Component {
       this.state.notification ?
         <Notification message={this.state.notification} /> : <div></div>
     return (
-      <div>
-        <Router>
-          <div>
-            <h1>Software Anecdotes</h1>
+      // <div className="container">
+      <Container>
+        <div>
+          <Router>
             <div>
-              <Menu />
+              <h1>Software Anecdotes</h1>
+              <div>
+                <Navigation />
+              </div>
+              {naytetaanIlmoitus}
+              <Route exact path="/" render={() => <AnecdoteList anecdotes={this.state.anecdotes} />} />
+              <Route exact path="/create" render={({ history }) => <CreateNew history={history} addNew={this.addNew} />} />
+              <Route path="/anecdotes/:id" render={({ match }) =>
+                <Anecdote anecdote={this.anecdoteById(match.params.id)} />} />
+              <Route path="/about" render={() => <About />} />
+              {/* <Route path="/users" render={() => <Users />} /> */}
+              <div>
+                <Footer />
+              </div>
             </div>
-            {naytetaanIlmoitus}
-            <Route exact path="/" render={() => <AnecdoteList anecdotes={this.state.anecdotes} />} />
-            <Route exact path="/create" render={({ history }) => <CreateNew history={history} addNew={this.addNew} />} />
-            <Route path="/anecdotes/:id" render={({ match }) =>
-              <Anecdote anecdote={this.anecdoteById(match.params.id)} />} />
-            <Route path="/about" render={() => <About />} />
-            {/* <Route path="/users" render={() => <Users />} /> */}
-            <div>
-              <Footer />
-            </div>
-          </div>
-        </Router>
-      </div >
+          </Router>
+        </div >
+      </Container>
+      // </div >
     )
   }
 }
