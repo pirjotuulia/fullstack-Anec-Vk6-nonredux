@@ -2,13 +2,29 @@ import React from 'react'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import Anecdote from './components/Anecdote'
 import Notification from './components/Notification';
+import { NavLink } from 'react-router-dom'
 import './index.css'
 
 const Menu = () => (
   <div className="menu">
-    <Link className="menuitem" to="/">anecdotes</Link> &nbsp;
-    <Link className="menuitem" to="/create">create new</Link> &nbsp;
-    <Link className="menuitem" to="/about">about</Link> &nbsp;
+    <NavLink className="menuitem" exact to="/" activeStyle={{
+      fontWeight: 'bold',
+      color: 'blue',
+      background: 'lavender',
+      padding: '10px'
+    }}>Anecdotes</NavLink> &nbsp;
+    <NavLink className="menuitem" exact to="/create" activeStyle={{
+      fontWeight: 'bold',
+      color: 'blue',
+      background: 'lavender',
+      padding: '10px'
+    }}>Create new</NavLink> &nbsp;
+    <NavLink className="menuitem" exact to="/about" activeStyle={{
+      fontWeight: 'bold',
+      color: 'blue',
+      background: 'lavender',
+      padding: '10px'
+    }}>About</NavLink> &nbsp;
   </div>
 )
 
