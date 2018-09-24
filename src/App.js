@@ -6,9 +6,9 @@ import './index.css'
 
 const Menu = () => (
   <div className="menu">
-    <Link to="/">anecdotes</Link> &nbsp;
-    <Link to="/create">create new</Link> &nbsp;
-    <Link to="/about">about</Link> &nbsp;
+    <Link className="menuitem" to="/">anecdotes</Link> &nbsp;
+    <Link className="menuitem" to="/create">create new</Link> &nbsp;
+    <Link className="menuitem" to="/about">about</Link> &nbsp;
   </div>
 )
 
@@ -121,6 +121,9 @@ class App extends React.Component {
   addNew = (anecdote) => {
     anecdote.id = (Math.random() * 10000).toFixed(0)
     this.setState({ anecdotes: this.state.anecdotes.concat(anecdote), notification: `a new anecdote ${anecdote.content} added` })
+    setTimeout(() => {
+      this.setState({ notification: null })
+    }, 10000)
   }
 
   anecdoteById = (id) =>
@@ -156,6 +159,7 @@ class App extends React.Component {
             <Route exact path="/create" render={({ history }) => <CreateNew history={history} addNew={this.addNew} />} />
             <Route path="/anecdotes/:id" render={({ match }) =>
               <Anecdote anecdote={this.anecdoteById(match.params.id)} />} />
+            <Route path="/about" render={() => <About />} />
             {/* <Route path="/users" render={() => <Users />} /> */}
             <div>
               <Footer />
